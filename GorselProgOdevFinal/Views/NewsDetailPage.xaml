@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GorselProgOdevFinal.Views.NewsDetailPage"
+             Title="Haber Detayı"
+             BackgroundColor="White">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Paylaş" Clicked="Share_Clicked"/>
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Image Source="{Binding Thumbnail}" 
+                   Aspect="AspectFill"
+                   HeightRequest="250"
+                   BackgroundColor="LightGray"/>
+
+            <Label Text="{Binding Title}" 
+                   FontSize="22" 
+                   FontAttributes="Bold" 
+                   TextColor="Black"/>
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="{Binding Author}" TextColor="DarkGreen" FontAttributes="Bold"/>
+                <Label Text="|" TextColor="Gray"/>
+                <Label Text="{Binding PubDate}" TextColor="Gray"/>
+            </HorizontalStackLayout>
+
+            <BoxView HeightRequest="1" Color="LightGray"/>
+
+            <Label Text="{Binding CleanDescription}" 
+                   FontSize="16" 
+                   TextColor="#333333"/>
+
+            <Button Text="Haberi Kaynağında Oku"
+                    Clicked="OpenSource_Clicked"
+                    BackgroundColor="DarkGreen"
+                    TextColor="White"
+                    Margin="0,20,0,0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

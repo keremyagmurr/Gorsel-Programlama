@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:GorselProgOdevFinal.ViewModels"
+             x:Class="GorselProgOdevFinal.Views.NewsPage"
+             Title="Haberler"
+             BackgroundColor="{AppThemeBinding Light=White, Dark=#121212}">
+
+    <Grid RowDefinitions="Auto, *">
+
+        <ScrollView Grid.Row="0" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="10,10" BackgroundColor="Transparent">
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="Manşet" 
+                        Command="{Binding LoadNewsCommand}" 
+                        CommandParameter="Manşet" 
+                        HeightRequest="40" 
+                        CornerRadius="20" 
+                        BackgroundColor="Green" 
+                        TextColor="White"
+                        FontAttributes="Bold"/>
+
+                <Button Text="Ekonomi" Command="{Binding LoadNewsCommand}" CommandParameter="Ekonomi" 
+                        HeightRequest="40" CornerRadius="20" 
+                        BackgroundColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}" 
+                        TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+
+                <Button Text="Spor" Command="{Binding LoadNewsCommand}" CommandParameter="Spor" 
+                        HeightRequest="40" CornerRadius="20" 
+                        BackgroundColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}" 
+                        TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+
+                <Button Text="Bilim" Command="{Binding LoadNewsCommand}" CommandParameter="Bilim" 
+                        HeightRequest="40" CornerRadius="20" 
+                        BackgroundColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}" 
+                        TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+
+                <Button Text="Gündem" Command="{Binding LoadNewsCommand}" CommandParameter="Gündem" 
+                        HeightRequest="40" CornerRadius="20" 
+                        BackgroundColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}" 
+                        TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        <RefreshView Grid.Row="1" 
+                     Command="{Binding LoadNewsCommand}" 
+                     CommandParameter="{Binding CurrentCategory}"
+                     IsRefreshing="{Binding IsBusy}"
+                     RefreshColor="DarkGreen">
+
+            <CollectionView ItemsSource="{Binding NewsList}"
+                            SelectionMode="None"
+                            Margin="10">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="15"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border StrokeShape="RoundRectangle 15"
+                                StrokeThickness="0"
+                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                Padding="0">
+
+                            <Grid RowDefinitions="200, Auto" Padding="0">
+                                <Image Grid.Row="0" 
+                                       Source="{Binding Thumbnail}" 
+                                       Aspect="AspectFill"
+                                       BackgroundColor="LightGray"/>
+
+                                <VerticalStackLayout Grid.Row="1" Padding="15" Spacing="8">
+
+                                    <Label Text="{Binding Title}" 
+                                           FontSize="16" 
+                                           FontAttributes="Bold" 
+                                           TextColor="{AppThemeBinding Light=Black, Dark=White}" 
+                                           MaxLines="2" 
+                                           LineBreakMode="TailTruncation"/>
+
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Label Text="{Binding Author}" TextColor="#512BD4" FontSize="12" FontAttributes="Bold"/>
+                                        <Label Text="{Binding PubDate}" TextColor="Gray" FontSize="12"/>
+                                    </HorizontalStackLayout>
+
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:NewsViewModel}}, Path=OpenDetailCommand}"
+                                                      CommandParameter="{Binding .}"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <ActivityIndicator Grid.Row="1" 
+                           IsRunning="{Binding IsBusy}" 
+                           IsVisible="{Binding IsBusy}" 
+                           Color="#512BD4" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"/>
+
+    </Grid>
+</ContentPage>

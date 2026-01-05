@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GorselProgOdevFinal.Views.HomePage"
+             Title="Giriş"
+             BackgroundColor="LightYellow">
+
+    <Shell.TitleView>
+        <Label Text="Giriş" 
+               TextColor="DarkGreen" 
+               FontSize="20" 
+               VerticalTextAlignment="Center" 
+               FontAttributes="Bold"/>
+    </Shell.TitleView>
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30" VerticalOptions="Center">
+            <Border Stroke="Green"
+                    StrokeThickness="4"
+                    StrokeShape="RoundRectangle 100"
+                    HeightRequest="200"
+                    WidthRequest="200"
+                    HorizontalOptions="Center">
+
+                <Image Source="kendi_fotografim.png" 
+                       Aspect="AspectFill"
+                       HeightRequest="192"
+                       WidthRequest="192"/>
+            </Border>
+
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Kerem Yağmur" 
+                       TextColor="Black"
+                       FontSize="28"
+                       HorizontalOptions="Center"
+                       FontAttributes="Bold"/>
+
+                <Label Text="22010310076" 
+                       TextColor="Black"
+                       FontSize="24"
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="5" Margin="0,20,0,0">
+                <Label Text="Bartın Üniversitesi" 
+                       TextColor="Gray"
+                       FontSize="20"
+                       HorizontalOptions="Center"/>
+                <Label Text="Bilgisayar Mühendisliği Bölümü" 
+                       TextColor="Gray"
+                       FontSize="16"
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
+            
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

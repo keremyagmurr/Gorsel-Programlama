@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GorselProgOdevFinal.Views.TodoDetailPage"
+             Title="Görev Detayı"
+             BackgroundColor="#121212">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="20">
+
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Başlık" TextColor="DarkGreen" FontAttributes="Bold"/>
+                <Entry x:Name="TitleEntry" 
+                       Placeholder="Örn: Ödev Yapılacak" 
+                       TextColor="White"
+                       PlaceholderColor="Gray"
+                       BackgroundColor="#1E1E1E"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Detay" TextColor="DarkGreen" FontAttributes="Bold"/>
+                <Editor x:Name="DetailEntry" 
+                        Placeholder="Detayları buraya yazın..." 
+                        TextColor="White"
+                        PlaceholderColor="Gray"
+                        BackgroundColor="Black"
+                        HeightRequest="100"/>
+            </VerticalStackLayout>
+
+            <Grid ColumnDefinitions="*,*">
+                <VerticalStackLayout Spacing="5" Margin="0,0,10,0">
+                    <Label Text="Tarih" TextColor="DarkGreen" FontAttributes="Bold"/>
+                    <DatePicker x:Name="DatePickerControl" 
+                                TextColor="White" 
+                                BackgroundColor="Black"
+                                Format="dd.MM.yyyy"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" Spacing="5" Margin="10,0,0,0">
+                    <Label Text="Saat" TextColor="DarkGreen" FontAttributes="Bold"/>
+                    <TimePicker x:Name="TimePickerControl" 
+                                TextColor="White" 
+                                BackgroundColor="Black"
+                                Format="HH:mm"/>
+                </VerticalStackLayout>
+            </Grid>
+
+            <Button Text="KAYDET"
+                    Clicked="SaveButton_Clicked"
+                    BackgroundColor="DarkGreen"
+                    TextColor="Black"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    Margin="0,20,0,0"/>
+
+            <ActivityIndicator x:Name="LoadingIndicator" Color="DarkGreen" IsVisible="False"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

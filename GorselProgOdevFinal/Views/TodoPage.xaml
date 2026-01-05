@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:GorselProgOdevFinal.ViewModels"
+             xmlns:converters="clr-namespace:GorselProgOdevFinal.Converters"
+             x:Class="GorselProgOdevFinal.Views.TodoPage"
+             Title="Yapılacaklar"
+             BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#121212}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToObjectConverter x:Key="BoolToObjectConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Yenile" Command="{Binding LoadTodosCommand}" IconImageSource="dotnet_bot.png"/>
+        <ToolbarItem Text="+" Command="{Binding GoToDetailCommand}" CommandParameter="{x:Null}"/>
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#BB86FC" HorizontalOptions="Center" VerticalOptions="Start" Margin="0,10,0,0"/>
+
+        <CollectionView ItemsSource="{Binding Todos}" SelectionMode="None" Margin="15">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border StrokeShape="RoundRectangle 10" 
+                            StrokeThickness="0" 
+                            BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}" 
+                            Padding="15">
+
+                        <Grid ColumnDefinitions="Auto, *, Auto">
+                            <CheckBox IsChecked="{Binding IsDone, Mode=TwoWay}" Color="#03DAC6" VerticalOptions="Start">
+                                <CheckBox.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TodoViewModel}}, Path=ToggleDoneCommand}" CommandParameter="{Binding .}"/>
+                                </CheckBox.GestureRecognizers>
+                            </CheckBox>
+
+                            <VerticalStackLayout Grid.Column="1" Spacing="5" Margin="10,0">
+                                <Label Text="{Binding Title}" 
+                                       TextColor="{Binding IsDone, Converter={StaticResource BoolToObjectConverter}, ConverterParameter='#03DAC6|#BB86FC'}"
+                                       FontSize="18" FontAttributes="Bold"
+                                       TextDecorations="{Binding IsDone, Converter={StaticResource BoolToObjectConverter}, ConverterParameter='Strikethrough|None'}"/>
+
+                                <Label Text="{Binding Detail}" TextColor="Gray" FontSize="14" MaxLines="2" LineBreakMode="TailTruncation"/>
+                                <Label Text="{Binding FormattedDate}" TextColor="Gray" FontSize="12"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="2" Spacing="10">
+                                <Button Text="✎" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TodoViewModel}}, Path=GoToDetailCommand}" CommandParameter="{Binding .}" BackgroundColor="#03DAC6" TextColor="Black" HeightRequest="35" WidthRequest="45" Padding="0" CornerRadius="5"/>
+                                <Button Text="✕" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TodoViewModel}}, Path=DeleteTodoCommand}" CommandParameter="{Binding .}" BackgroundColor="#CF6679" TextColor="White" HeightRequest="35" WidthRequest="45" Padding="0" CornerRadius="5"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

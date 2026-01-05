@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:GorselProgOdevFinal.ViewModels"
+             xmlns:converters="clr-namespace:GorselProgOdevFinal.Converters"
+             x:Class="GorselProgOdevFinal.Views.LoginPage"
+             Shell.NavBarIsVisible="False"
+             Shell.FlyoutBehavior="Disabled" 
+             Title="Login">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToObjectConverter x:Key="BoolToObjectConverter" />
+            <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <BoxView Color="DarkGreen" VerticalOptions="Start" HeightRequest="250" HorizontalOptions="Fill"/>
+
+        <ScrollView VerticalOptions="Center">
+            <VerticalStackLayout Padding="30" Spacing="20">
+
+                <Label Text="{Binding IsLoginMode, Converter={StaticResource BoolToObjectConverter}, ConverterParameter='Giriş Yap|Kayıt Ol'}"
+                       TextColor="LightGreen" 
+                       FontSize="32"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+
+                <Border BackgroundColor="White" 
+                        StrokeShape="RoundRectangle 20" 
+                        StrokeThickness="0"
+                        Padding="20">
+
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="0,5"
+                                Radius="10"
+                                Opacity="0.1" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="15">
+
+                        <Entry Placeholder="Kullanıcı Adı"
+                               Text="{Binding Username}"
+                               TextColor="Black" 
+                               PlaceholderColor="Gray"
+                               IsVisible="{Binding IsLoginMode, Converter={StaticResource InvertedBoolConverter}}" />
+
+                        <Entry Placeholder="Email"
+                               Text="{Binding Email}"
+                               TextColor="Black" 
+                               PlaceholderColor="Gray"
+                               Keyboard="Email" />
+
+                        <Entry Placeholder="Şifre"
+                               Text="{Binding Password}"
+                               TextColor="Black" 
+                               PlaceholderColor="Gray"
+                               IsPassword="True" />
+
+                        <Button Text="{Binding IsLoginMode, Converter={StaticResource BoolToObjectConverter}, ConverterParameter='Giriş Yap|Kaydol'}"
+                                Command="{Binding LoginOrRegisterCommand}"
+                                BackgroundColor="DarkGreen"
+                                TextColor="LightGreen"
+                                CornerRadius="10"
+                                HeightRequest="50"/>
+
+                        <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                                           IsVisible="{Binding IsBusy}"
+                                           Color="DarkGreen"/>
+
+                        <Label Text="{Binding IsLoginMode, Converter={StaticResource BoolToObjectConverter}, ConverterParameter='Hesabım yok? Kaydol|Zaten hesabım var? Giriş Yap'}"
+                               TextColor="DarkGreen"
+                               HorizontalOptions="Center"
+                               TextDecorations="Underline">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleModeCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

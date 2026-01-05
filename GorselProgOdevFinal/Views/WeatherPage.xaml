@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:GorselProgOdevFinal.ViewModels"
+             x:Class="GorselProgOdevFinal.Views.WeatherPage"
+             Title="Hava Durumu (MGM)"
+             BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#121212}">
+
+    <Grid RowDefinitions="Auto, *">
+
+        <Border Grid.Row="0" StrokeThickness="0" 
+                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}" 
+                Padding="20">
+            <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+
+                <Border Stroke="Gray" StrokeThickness="1" StrokeShape="RoundRectangle 5" 
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#333333}" 
+                        WidthRequest="220">
+                    <Picker Title="Şehir Seçiniz" 
+                            ItemsSource="{Binding AvailableCities}" 
+                            SelectedItem="{Binding SelectedCityName}" 
+                            TextColor="{AppThemeBinding Light=Black, Dark=White}" 
+                            TitleColor="Gray"
+                            HorizontalTextAlignment="Center" 
+                            HeightRequest="45"/>
+                </Border>
+
+                <Button Text="EKLE" 
+                        Command="{Binding AddCityCommand}" 
+                        BackgroundColor="DarkGreen" 
+                        TextColor="White" 
+                        FontAttributes="Bold" 
+                        CornerRadius="5" 
+                        HeightRequest="45"
+                        WidthRequest="80"/>
+            </HorizontalStackLayout>
+        </Border>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Cities}" Margin="15">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border StrokeShape="RoundRectangle 15" StrokeThickness="0" 
+                            BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}" 
+                            Padding="15"
+                            Margin="0,0,0,15">
+
+                        <Grid RowDefinitions="Auto, Auto">
+
+                            <Grid ColumnDefinitions="*, Auto" Margin="0,0,0,10">
+                                <Label Text="{Binding Name}" 
+                                       TextColor="DarkGreen" 
+                                       FontSize="22" 
+                                       FontAttributes="Bold" 
+                                       VerticalOptions="Center"/>
+
+                                <Button Text="✕" 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:WeatherViewModel}}, Path=DeleteCityCommand}" 
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="IndianRed" 
+                                        TextColor="White" 
+                                        HeightRequest="30" 
+                                        WidthRequest="30" 
+                                        Padding="0" 
+                                        CornerRadius="15"/>
+                            </Grid>
+
+                            <Border Grid.Row="1" StrokeThickness="0" BackgroundColor="Transparent" Padding="0">
+                                <WebView Source="{Binding WidgetSource}" 
+                                         HeightRequest="120" 
+                                         HorizontalOptions="Fill"/>
+                            </Border>
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
